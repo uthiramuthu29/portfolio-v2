@@ -3,7 +3,7 @@
 import WorkCard from "./WorkCard";
 
 import { useContext } from "react";
-import { ThemeContext } from "@/context/ThemeContext.jsx";
+import { ThemeContext } from "@/context/ThemeContext";
 
 
 const images = {

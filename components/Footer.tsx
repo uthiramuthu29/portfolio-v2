@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext.jsx";
+import { ThemeContext } from "../context/ThemeContext";
 import Image from "next/image";
 
 const logoDark = "/DarkModeImages/LogoDark.png";

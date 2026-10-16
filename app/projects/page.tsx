@@ -5,7 +5,7 @@ import WorkCard from "@/components/WorkCard";
 
 
 import { useContext } from "react";
-import { ThemeContext } from "@/context/ThemeContext.jsx";
+import { ThemeContext } from "@/context/ThemeContext";
 
 const images = {
     logoDark: "/DarkModeImages/LogoDark.png",

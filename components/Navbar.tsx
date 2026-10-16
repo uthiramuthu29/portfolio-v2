@@ -18,7 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext.jsx";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Navbar() {
   const { theme, setTheme } = useContext(ThemeContext);

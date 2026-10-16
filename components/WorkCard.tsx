@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { useContext } from "react";
-import { ThemeContext } from "@/context/ThemeContext.jsx";
+import { ThemeContext } from "@/context/ThemeContext";
 
 const images = {
     rightWhiteArrow : "/ArrowRightDark.png",
