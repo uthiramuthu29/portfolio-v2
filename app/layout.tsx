@@ -3,6 +3,12 @@ import "./globals.css";
 import ThemeProvider from "@/context/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Uthira Muthu S P | Frontend Developer",
@@ -13,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`min-h-full antialiased`}>
-      <body className="flex flex-col  min-h-full bg-[url('/TypeHeaderGradient.png'),url('/TypeFooterGradient.png')] bg-position-[top,bottom] bg-no-repeat font-inter bg-[#FBFBFB] dark:bg-[#0d0d0d]">
+      <body className={`${inter.className}flex flex-col  min-h-full bg-[url('/TypeHeaderGradient.png'),url('/TypeFooterGradient.png')] bg-position-[top,bottom] bg-no-repeat font-inter bg-[#FBFBFB] dark:bg-[#0d0d0d]`}>
         <ThemeProvider>
           <main className="px-4 lg:px-0 lg:max-w-5xl lg:mx-auto pt-0! lg:w-full flex flex-col flex-1 ">
             <Navbar />

@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { getSocialLinks } from '@/sanity/lib/fetchSocialLinks';
+import { getSocialUrls } from './utils';
 
-export default function Intro() {
+export default async function Intro() {
+  const socialData = await getSocialLinks();
+  const socialUrls = getSocialUrls(socialData);
   return (
     <>
       <div className="intro mb-34 lg:mb-55">
@@ -17,12 +21,12 @@ export default function Intro() {
               high-performance web applications with modern technologies.
             </p>
             <div className="flex flex-col lg:flex-row gap-4 ">
-              <Link
+              <a
                 className="text-[#181818] dark:text-[#808080] text-[18px] text-center font-medium bg-[#F3F3F3] dark:bg-[#181818] hover:bg-[linear-gradient(180deg,rgba(26,26,26,1)_0%,rgba(19,19,19,1)_100%)] hover:shadow-[inset_0px_2px_4px_rgba(255,255,255,0.08)] hover:text-white py-5 px-8 rounded-lg"
-                href="/files/Uthira-Muthu-S-P-CV.pdf" target="_blank"
+                href={socialUrls.resume} target="_blank"
               >
                 See my resume
-              </Link>
+              </a>
               <Link
                 className="text-[#181818] dark:text-[#808080] text-[18px] text-center font-medium bg-[#F3F3F3] dark:bg-[#181818] hover:bg-[linear-gradient(180deg,rgba(26,26,26,1)_0%,rgba(19,19,19,1)_100%)] hover:shadow-[inset_0px_2px_4px_rgba(255,255,255,0.08)] hover:text-white py-5 px-8 rounded-lg"
                 href="/contact"

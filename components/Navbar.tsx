@@ -50,7 +50,7 @@ export default function Navbar() {
               <Link href="/about">About</Link>
             </li>
             <li className="text-[#181818] dark:text-[#C5C5C5] text-[16px] font-medium pb-4">
-              <Link href="/work">Work</Link>
+              <Link href="/projects">Projects</Link>
             </li>
             <li className="text-[#181818] dark:text-[#C5C5C5] text-[16px] font-medium pb-4">
               <Link href="/contact">Contact</Link>
@@ -58,7 +58,7 @@ export default function Navbar() {
             <li className="text-[#181818] dark:text-[#C5C5C5] text-[16px] font-medium flex items-center gap-1 group relative pb-4">
               More
               <FaAngleDown size={14} className="absolute top-1.5 -right-4.5 "/>
-              <ul className="sub-nav bg-[rgba(255,255,255,0.25)] dark:bg-[rgba(24,24,29,0.6)] absolute top-10 -left-17 rounded-b-xl w-33 px-6 py-4 invisible group-hover:visible">
+              <ul className="sub-nav bg-[rgba(255,255,255,0.25)] dark:bg-[rgba(24,24,29,0.6)] absolute top-10 -left-17 rounded-b-xl w-33 px-5 py-4 invisible group-hover:visible">
                 <li className="mb-4 ">
                   <Link href="/books">Bookshelf</Link>
                 </li>

@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+import type { SocialLinksData } from '@/sanity/lib/fetchSocialLinks';
+import { getSocialUrls } from './utils';
 
 import Image from "next/image";
 import Link from "next/link";
@@ -6,12 +9,37 @@ import Link from "next/link";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
-type AboutContentProps = {
-  title: string,
-  children: React.ReactNode
-}
+type AboutSection = {
+  _key: string;
+  subHeading: string;
+  content: string;
+};
 
-function Content({ title, children }: AboutContentProps) {
+type AboutData = {
+  sections?: AboutSection[];
+  signatureDark?: string | null;
+  signatureLight?: string | null;
+  photo?: string | null;
+};
+
+type AboutContentProps = {
+  about: AboutData | null;
+  socialData: SocialLinksData | null;
+};
+
+type ContentProps = {
+  title: string;
+  children: React.ReactNode;
+};
+
+const images = {
+  signatureLight: "/LightModeImages/SignatureLight.png",
+  signatureDark: "/DarkModeImages/SignatureDark.png",
+  memoji: "/memoji.png",
+  send: "/send.svg",
+};
+
+export function Content({ title, children }: ContentProps) {
   return (
     <>
       <h2 className="text-[16px] text-[#181818] dark:text-[#808080] font-semibold uppercase mb-2 ">
@@ -24,82 +52,66 @@ function Content({ title, children }: AboutContentProps) {
   );
 }
 
-const images = {
-  signatureLight: "/LightModeImages/SignatureLight.png",
-  signatureDark: "/DarkModeImages/SignatureDark.png",
-  memoji: "/memoji.png",
-  send: "/send.svg",
-  india: "/india.png",
-};
-
-export default function AboutContent() {
+export default function AboutContent({ about, socialData }:  AboutContentProps) {
   const { theme } = useContext(ThemeContext);
+
+  const socialUrls = getSocialUrls(socialData);
+
+  const cmsSignature =
+    theme === "dark"
+      ? about?.signatureDark || about?.signatureLight
+      : about?.signatureLight || about?.signatureDark;
+
+  const signature =
+    cmsSignature ||
+    (theme === "dark" ? images.signatureDark : images.signatureLight);
+
+  const profilePhoto = about?.photo || images.memoji;
 
   return (
     <>
       <div className="about-content pb-22">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="left order-2 lg:order-0 col-span-7">
-            <Content title="Who I am">
-              I’m{" "}
-              <span className="text-[#808080] dark:text-white">
-                Uthira Muthu
-              </span>{" "}
-              (Pronounced “U-thi-ra Mu-thu”) a multi-disciplinary front-end
-              developer based in Chennai, Tamil Nadu, India{" "}
-              <Image
-                className="w-full inline"
-                width={18}
-                height={18}
-                src={images.india}
-                alt="India"
-              />
-              .
-            </Content>
-            <Content title="What I Do">
-              With two years of invaluable experience in my role at Unique Force
-              Technology Solutions –– a tech company based here in Chennai, I
-              have honed my skills in React.js, TailwindCSS, jQuery, HTML, CSS,
-              Bootstrap and Sass, allowing me to craft seamless and interactive
-              user experiences. During my time at Unique Force Technology
-              Solutions, I had the privilege of collaborating on projects for
-              esteemed clients such as the Bausch Health, Bausch & Lomb, Salix
-              Pharmaceuticals and Ortho Dermatologics. It was an incredibly
-              rewarding experience to develop applications that directly impact
-              the lives of people.
-            </Content>
-            <Content title="What I Did">
-              Before delving into the realm of front end development, I spent
-              four years pursuing my Engineering Degree at Panimalar Engineering
-              College, Chennai. This background has equipped me with a keen eye
-              for problem solving.
-            </Content>
+            {about?.sections?.length ? (
+              about.sections.map((section) => (
+                <Content key={section._key} title={section.subHeading}>
+                  {section.content}
+                </Content>
+              ))
+            ) : (
+              <p className="text-[15px] lg:text-[18px] text-[#808080] mb-8">
+                About content is not available yet.
+              </p>
+            )}
+            
             <p className="text-[15px] lg:text-[18px] text-[#808080] font-normal mt-7 mb-15 ">
               Feel free to reach out via{" "}
               <a
                 className="text-[#181818] dark:text-white underline"
-                href="mailto:uthiramuthusp29@gmail.com"
+                href={`mailto:${socialUrls.email}`}
               >
                 e-mail
               </a>
               , or follow me on{" "}
               <a
                 className="text-[#181818] dark:text-white underline"
-                href="https://www.instagram.com/_._.blood_pearl._._/"
+                href={socialUrls.instagram}
               >
                 Instagram
               </a>
               . Want to see where I’ve worked? Check out my{" "}
               <a
                 className="text-[#181818] dark:text-white underline"
-                href="/files/UthiraMuthuResume.pdf"
+                href={socialUrls.resume}
+                download
               >
                 Resume
               </a>
               , or Connect with me on
               <a
                 className="text-[#181818] dark:text-white underline"
-                href="https://www.linkedin.com/in/s-p-uthira-muthu-6bb287197"
+                href={socialUrls.linkedin}
               >
                 {" "}
                 LinkedIn
@@ -113,9 +125,7 @@ export default function AboutContent() {
               className="max-w-full"
               width={326}
               height={80}
-              src={
-                theme === "dark" ? images.signatureDark : images.signatureLight
-              }
+              src={signature}
               alt="Signature"
             />
             <div className="get-in-touch block lg:hidden">
@@ -133,7 +143,7 @@ export default function AboutContent() {
               className="mx-auto max-w-full"
               width={200}
               height={100}
-              src={images.memoji}
+              src={profilePhoto}
               alt="Memoji"
             />
             <div className="get-in-touch hidden lg:block">
