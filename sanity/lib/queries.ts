@@ -36,7 +36,6 @@ export const SOCIAL_LINKS_QUERY = defineQuery(`
     }
     }`);
 
-
 export const TECH_STACK_QUERY = defineQuery(`
     *[_type == "techStack"] | order(_createdAt asc) {
     _id,
@@ -48,3 +47,32 @@ export const TECH_STACK_QUERY = defineQuery(`
         "stackLogo": stackLogo.asset->url
     }
     }`);
+
+export const BOOKS_QUERY = defineQuery(`
+    *[_type == "books"] | order(_createdAt asc) {
+    _id,
+    title,
+    books[]{
+        _key,
+        bookName,
+        "bookImage": bookImage.asset->url
+    }
+    }`);
+
+export const INTRO_QUERY = defineQuery(`
+        *[_type == "intro"][0] {
+        _id,
+        greeting,
+        "greetingImage": greetingImage.asset->url,
+        namePrefix,
+        name,
+        description,
+        "image": image.asset->url,
+        buttons[] {
+            _key,
+            label,
+            linkType,
+            url,
+            openInNewTab
+          }
+        }`);
